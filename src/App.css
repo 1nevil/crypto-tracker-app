@@ -37,3 +37,19 @@
 .coin_input::placeholder {
   color: rgb(255, 251, 251);
 }
+#loader .sec {
+  height: 100px;
+  position: relative;
+  z-index: 1;
+}
+
+.sec span {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: purple;
+  border-radius: 50%;
+}
