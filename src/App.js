@@ -7,37 +7,25 @@ import InfiniteScroll from "react-infinite-scroll-component";
 function App() {
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState("");
-  const [pages, setPages] = useState(2);
+  const [pages, setPages] = useState(1);
   const [hasMore, sethasMore] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false`
-      )
-      .then((res) => {
-        setCoins(res.data);
-        console.log(res.data);
-        console.log(pages);
-        // setCoins(res.data);
-      })
-      .catch((err) =>
-        alert("API's are getting some error reopen after some time " + err)
-      );
+    fetchData();
   }, []);
 
   const fetchData = async () => {
-    setPages(pages + 1);
-    axios
-      .get(
+    try {
+      const res = await axios.get(
         `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pages}&sparkline=false`
-      )
-      .then((res) => {
-        setCoins((prev) => [...prev, ...res.data]);
-      })
-      .catch((err) =>
-        alert("API's are getting some error reopen after some time " + err)
       );
+      //because by default in devlopment phase useEffect run 2 times thats why added this condition
+      const data = await res.data;
+      pages === 1 ? setCoins(data) : setCoins((prev) => [...prev, ...data]);
+      setPages(pages + 1);
+    } catch (error) {
+      alert("So many Api request are open " + error);
+    }
   };
 
   const handleChange = (e) => {
@@ -54,11 +42,11 @@ function App() {
   return (
     <div className="Coin_app">
       <div className="coin_search">
-        <h1 className="coin-text">Search crypto currency</h1>
+        <h1 className="coin-text">Crypto currency</h1>
         <form>
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search crypto currency"
             className="coin_input"
             onChange={handleChange}
           />
@@ -69,11 +57,7 @@ function App() {
         dataLength={coins.length}
         hasMore={hasMore}
         next={fetchData}
-        loader={
-          <p style={{ textAlign: "center", margin: "2rem 0" }}>
-            {<b>Loading...</b>}
-          </p>
-        }
+        loader={<h6 className="loading">Loading...</h6>}
         endMessage={
           <p style={{ textAlign: "center" }}>
             {hasMore && <b>You have seen it all</b>}

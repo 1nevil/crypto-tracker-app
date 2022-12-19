@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@300;400&family=Poppins:wght@500;600;700;800&family=Roboto:ital,wght@0,100;0,300;1,100&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@300;400&family=Poppins:wght@500;600;700;800&family=Roboto:ital,wght@0,100;0,300;1,100&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 * {
   margin: 0px;
   padding: 0px;
@@ -36,6 +37,11 @@
 }
 .coin_input::placeholder {
   color: rgb(255, 251, 251);
+}
+.loading {
+  text-align: center;
+  margin: 2rem 0;
+  font-size: 1.3rem;
 }
 #loader .sec {
   height: 100px;
